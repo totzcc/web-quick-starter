@@ -1,0 +1,2 @@
+# fxit-web-jpa-starter
+[![](https://jitpack.io/v/joyrun/PullUpSwipeRefreshLayout.svg)](https://jitpack.io/#joyrun/PullUpSwipeRefreshLayout)
