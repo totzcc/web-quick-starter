@@ -104,7 +104,7 @@ public class Copies {
 
     @Data
     @AllArgsConstructor
-    public static class BasePageRequest<T> implements Serializable {
+    public static class BasePageReq<T> implements Serializable {
         private T data;
         private Integer pageNum;
         private Integer pageSize;
