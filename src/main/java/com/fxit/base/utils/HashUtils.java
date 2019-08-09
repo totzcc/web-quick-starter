@@ -4,12 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -105,7 +108,31 @@ public class HashUtils {
         return hash(in, "SHA");
     }
 
-    public static String hash(String in, String type) {
+    public static String hmacSha256(String in, String key) {
+        try {
+            SecretKeySpec signingKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+            Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(signingKey);
+            return byte2hex(mac.doFinal(in.getBytes()));
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String byte2hex(byte[] b) {
+        StringBuilder hs = new StringBuilder();
+        String tmp;
+        for (int n = 0; b != null && n < b.length; n++) {
+            tmp = Integer.toHexString(b[n] & 0XFF);
+            if (tmp.length() == 1)
+                hs.append('0');
+            hs.append(tmp);
+        }
+        return hs.toString();
+    }
+
+    private static String hash(String in, String type) {
         MessageDigest sha;
         try {
             sha = MessageDigest.getInstance(type);
