@@ -29,7 +29,7 @@ public class HashUtils {
         if (cache == null) {
             String sha1 = getFileSha1(file);
             String md5 = getFileMD5(file);
-            cache = new FileHashCache(file.getAbsolutePath(), md5, sha1, System.currentTimeMillis(), file.length());
+            cache = new FileHashCache(file.getAbsolutePath(), md5, sha1, file.length(), System.currentTimeMillis());
             hashCache.put(file.getAbsolutePath(), cache);
         }
         return cache;
