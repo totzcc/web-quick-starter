@@ -7,7 +7,8 @@ import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-@Import({EnableScheduleConfig.class})
+@Import({EnableScheduleConfig.Config.class, EnableScheduleConfig.class})
 @Documented
 public @interface EnableSchedule {
+    int poolSize() default 1;
 }
