@@ -34,7 +34,7 @@ public class EnableScheduleConfig {
 
     @Bean
     public BeanPostProcessor scheduledAnnotationProcessor() {
-        System.out.println(String.format("EnableDdcScheduleConfig config, enable=%s, poolSize=", enable));
+        System.out.println(String.format("EnableDdcScheduleConfig config, enable=%s, poolSize=%s", enable, poolSize));
         log.info(String.format("EnableDdcScheduleConfig config, enable=%s, ", enable));
         if (enable) {
             ScheduledTaskRegistrar registrar = new ScheduledTaskRegistrar();
