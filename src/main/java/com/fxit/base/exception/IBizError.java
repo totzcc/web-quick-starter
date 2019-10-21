@@ -8,7 +8,7 @@ public interface IBizError {
 
     int getBizCode();
 
-    String name();
+    String getBizCodeName();
 
     String getMessage();
 
@@ -44,6 +44,11 @@ public interface IBizError {
 
         public int getBizCode() {
             return this.bizCode;
+        }
+
+        @Override
+        public String getBizCodeName() {
+            return name();
         }
 
         public String getMessage() {
