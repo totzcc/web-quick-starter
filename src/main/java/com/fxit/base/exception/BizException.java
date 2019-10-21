@@ -14,7 +14,7 @@ public class BizException extends RuntimeException {
     private Throwable throwable;
 
     public BizException(IBizError error) {
-        this(error.getCode(), error.getBizCode(), error.getMessage(), error.getLevel(), new Throwable());
+        this(error.getCode(), error.getBizCode(), error.getBizCodeName(), error.getMessage(), error.getLevel(), new Throwable());
     }
 
     public BizException(IBizError error, String extendMessage) {
