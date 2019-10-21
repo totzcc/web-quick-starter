@@ -8,6 +8,8 @@ public interface IBizError {
 
     int getBizCode();
 
+    String name();
+
     String getMessage();
 
     Level getLevel();
