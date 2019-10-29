@@ -80,13 +80,23 @@ public class Copies {
             }
         }
 
-        public BasePageRes(List<T> list, int totalPage, long total) {
+        public BasePageRes(List<T> list, long pages, long total) {
             this.list = list;
             this.total = total;
-            this.pages = totalPage;
+            this.pages = pages;
             if (this.list == null) {
                 this.list = Collections.emptyList();
             }
+        }
+
+        public BasePageRes(long total, long pageSize, List<T> list) {
+            this.list = list;
+            this.total = total;
+            long pages = total / pageSize;
+            if (total % pageSize != 0) {
+                pages += 1;
+            }
+            this.pages = pages;
         }
 
         public static <T> BasePageRes<T> empty() {
