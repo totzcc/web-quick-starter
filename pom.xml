@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.fxit</groupId>
-    <artifactId>web-jpa-starter</artifactId>
+    <artifactId>web-quick-starter</artifactId>
     <version>0.2.0</version>
     <build>
         <plugins>
