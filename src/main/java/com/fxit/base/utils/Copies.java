@@ -56,47 +56,30 @@ public class Copies {
         private long pages;
         private List<T> list;
 
-        public BasePageRes(org.springframework.data.domain.Page<T> page) {
-            this.list = page.getContent();
-            this.total = page.getTotalElements();
-            this.pages = page.getTotalPages();
-        }
-
-        public BasePageRes(List<T> list, org.springframework.data.domain.Page page) {
-            this.list = list;
-            this.total = page.getTotalElements();
-            this.pages = page.getTotalPages();
-            if (this.list == null) {
-                this.list = Collections.emptyList();
+        public static <T> BasePageRes fromPagesTotal(List<T> list, long total, long pageSize) {
+            if (list == null) {
+                list = Collections.emptyList();
             }
-        }
-
-        public BasePageRes(List<T> list, BasePageRes<?> page) {
-            this.list = list;
-            this.total = page.getTotal();
-            this.pages = page.getPages();
-            if (this.list == null) {
-                this.list = Collections.emptyList();
-            }
-        }
-
-        public BasePageRes(List<T> list, long pages, long total) {
-            this.list = list;
-            this.total = total;
-            this.pages = pages;
-            if (this.list == null) {
-                this.list = Collections.emptyList();
-            }
-        }
-
-        public BasePageRes(long total, long pageSize, List<T> list) {
-            this.list = list;
-            this.total = total;
+            BasePageRes res = new BasePageRes();
+            res.list = list;
+            res.total = total;
             long pages = total / pageSize;
             if (total % pageSize != 0) {
                 pages += 1;
             }
-            this.pages = pages;
+            res.pages = pages;
+            return res;
+        }
+
+        public static <T> BasePageRes fromPages(List<T> list, long pages, long total) {
+            if (list == null) {
+                list = Collections.emptyList();
+            }
+            BasePageRes res = new BasePageRes();
+            res.list = list;
+            res.pages = pages;
+            res.total = total;
+            return res;
         }
 
         public static <T> BasePageRes<T> empty() {

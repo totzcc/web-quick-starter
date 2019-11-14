@@ -3,12 +3,12 @@ package com.fxit.base.annotation.config;
 import com.fxit.base.annotation.EnableSwagger;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.stereotype.Component;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -26,12 +26,13 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class EnableSwaggerConfig {
-    @Value("${spring.profiles.active}")
     private String active;
+    private final Environment environment;
 
-    public EnableSwaggerConfig() {
-        System.out.println("EnableDdcSwaggerConfig created");
-        log.info("EnableDdcSwaggerConfig created");
+    public EnableSwaggerConfig(Environment environment) {
+        this.environment = environment;
+        this.active = environment.getProperty("spring.profiles.active");
+        log.info("EnableSwaggerConfig created");
     }
 
     private static String packageName = "";
@@ -40,8 +41,7 @@ public class EnableSwaggerConfig {
 
     @Bean
     public Docket docket() {
-        System.out.println("EnableDdcSwaggerConfig config");
-        log.info("EnableDdcSwaggerConfig config");
+        log.info("EnableSwaggerConfig config");
         if (disabledOnProfiles != null && disabledOnProfiles.length > 0) {
             // 环境禁用Swagger
             for (String profile : disabledOnProfiles) {

@@ -6,7 +6,7 @@
 
     <groupId>com.fxit</groupId>
     <artifactId>web-jpa-starter</artifactId>
-    <version>0.1.7</version>
+    <version>0.2.0</version>
     <build>
         <plugins>
             <plugin>
@@ -24,22 +24,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.3.10.Final</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>2.1.9.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -61,10 +45,6 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.7.0</version>
             <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
                 <exclusion>
                     <artifactId>javassist</artifactId>
                     <groupId>org.javassist</groupId>
@@ -101,16 +81,16 @@
                     <groupId>org.springframework</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
                     <artifactId>byte-buddy</artifactId>
                     <groupId>net.bytebuddy</groupId>
                 </exclusion>
                 <exclusion>
                     <artifactId>classmate</artifactId>
                     <groupId>com.fasterxml</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

@@ -28,14 +28,12 @@ public class EnableScheduleConfig {
     private static int poolSize = 1;
 
     public EnableScheduleConfig() {
-        System.out.println("EnableDdcScheduleConfig created");
-        log.info("EnableDdcScheduleConfig created");
+        log.info("EnableScheduleConfig created");
     }
 
     @Bean
     public BeanPostProcessor scheduledAnnotationProcessor() {
-        System.out.println(String.format("EnableDdcScheduleConfig config, enable=%s, poolSize=%s", enable, poolSize));
-        log.info(String.format("EnableDdcScheduleConfig config, enable=%s, ", enable));
+        log.info(String.format("EnableScheduleConfig config, enable=%s, ", enable));
         if (enable) {
             ScheduledTaskRegistrar registrar = new ScheduledTaskRegistrar();
             registrar.setScheduler(Executors.newScheduledThreadPool(poolSize));

@@ -73,7 +73,7 @@ public class ControllerExceptionHandler {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public class ExceptionRes {
+    public static class ExceptionRes {
         private int code;
         private int bizCode;
         private String message;
@@ -86,6 +86,5 @@ public class ControllerExceptionHandler {
             this.message = exception.getMessage();
             this.level = exception.getLevel();
         }
-
     }
 }
