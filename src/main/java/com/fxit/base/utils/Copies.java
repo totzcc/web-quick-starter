@@ -1,10 +1,14 @@
 package com.fxit.base.utils;
 
+import com.fxit.base.exception.BizException;
+import com.fxit.base.exception.IBizError;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
+import org.springframework.lang.NonNull;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
@@ -14,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 
+@Slf4j
 public class Copies {
     public static <S, T> T mapObject(S s, Class<T> tClass, Copyable<S, T> copyable) {
         if (s == null)
@@ -52,15 +57,15 @@ public class Copies {
     @Data
     @NoArgsConstructor
     public static class BasePageRes<T> implements Serializable {
-        private long total;
-        private long pages;
+        private long total = -1;
+        private long pages = -1;
         private List<T> list;
 
-        public static <T> BasePageRes fromPagesTotal(List<T> list, long total, long pageSize) {
+        public static <T> BasePageRes<T> fromPagesTotal(List<T> list, long total, long pageSize) {
             if (list == null) {
                 list = Collections.emptyList();
             }
-            BasePageRes res = new BasePageRes();
+            BasePageRes<T> res = new BasePageRes<>();
             res.list = list;
             res.total = total;
             long pages = total / pageSize;
@@ -71,14 +76,56 @@ public class Copies {
             return res;
         }
 
-        public static <T> BasePageRes fromPages(List<T> list, long pages, long total) {
+        public static <T> BasePageRes<T> fromPages(List<T> list, long pages, long total) {
             if (list == null) {
                 list = Collections.emptyList();
             }
-            BasePageRes res = new BasePageRes();
+            BasePageRes<T> res = new BasePageRes<>();
             res.list = list;
             res.pages = pages;
             res.total = total;
+            return res;
+        }
+
+        /**
+         * @param pageObject org.springframework.data.domain.Page
+         *                   *                   com.fxit.base.utils.Copies.BasePageRes
+         */
+        public static <T> BasePageRes<T> fromPages(@NonNull Object pageObject) {
+            return fromPages(null, pageObject);
+        }
+
+        /**
+         * @param pageObject org.springframework.data.domain.Page
+         *                   com.fxit.base.utils.Copies.BasePageRes
+         */
+        @SuppressWarnings("unchecked")
+        public static <T> BasePageRes<T> fromPages(List<T> list, @NonNull Object pageObject) {
+            BasePageRes<T> res = new BasePageRes<>();
+            if (pageObject instanceof BasePageRes) {
+                res.pages = ((BasePageRes) pageObject).getPages();
+                res.total = ((BasePageRes) pageObject).getTotal();
+                if (list == null) {
+                    list = ((BasePageRes) pageObject).getList();
+                }
+            }
+            Exception checkTypeException = null;
+            if (res.pages == -1) {
+                try {
+                    Class<?> aClass = Class.forName("org.springframework.data.domain.Page");
+                    if (aClass.isInstance(pageObject)) {
+                        res.total = (long) aClass.getMethod("getTotalElements").invoke(pageObject);
+                        res.pages = (long) aClass.getMethod("getTotalPages").invoke(pageObject);
+                        list = (List) aClass.getMethod("getContent").invoke(pageObject);
+                    }
+                } catch (Exception e) {
+                    checkTypeException = e;
+                }
+            }
+            if (res.pages == -1) {
+                throw new BizException(IBizError.BizCommonError.SYSTEM_ERROR, "pageObject不支持此类: " + pageObject.getClass(), checkTypeException);
+            }
+            res.list = list;
             return res;
         }
 
