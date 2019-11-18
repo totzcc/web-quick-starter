@@ -121,6 +121,16 @@ public class Copies {
                 } catch (Exception e) {
                     checkTypeException = e;
                 }
+                try {
+                    Class<?> aClass = Class.forName("com.baomidou.mybatisplus.core.metadata.IPage");
+                    if (aClass.isInstance(pageObject)) {
+                        res.total = (long) aClass.getMethod("getTotal").invoke(pageObject);
+                        res.pages = (long) aClass.getMethod("getPages").invoke(pageObject);
+                        list = (List) aClass.getMethod("getRecords").invoke(pageObject);
+                    }
+                } catch (Exception e) {
+                    checkTypeException = e;
+                }
             }
             if (res.pages == -1) {
                 throw new BizException(IBizError.BizCommonError.SYSTEM_ERROR, "pageObject不支持此类: " + pageObject.getClass(), checkTypeException);
