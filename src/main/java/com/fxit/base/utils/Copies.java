@@ -76,7 +76,7 @@ public class Copies {
             return res;
         }
 
-        public static <T> BasePageRes<T> fromPages(List<T> list, long pages, long total) {
+        public static <T> BasePageRes<T> fromPage(List<T> list, long pages, long total) {
             if (list == null) {
                 list = Collections.emptyList();
             }
@@ -88,19 +88,25 @@ public class Copies {
         }
 
         /**
-         * @param pageObject org.springframework.data.domain.Page
-         *                   *                   com.fxit.base.utils.Copies.BasePageRes
+         * @param pageObject
+         * <pre>
+         * org.springframework.data.domain.Page
+         * com.fxit.base.utils.Copies.BasePageRes
+         * </pre>
          */
-        public static <T> BasePageRes<T> fromPages(@NonNull Object pageObject) {
-            return fromPages(null, pageObject);
+        public static <T> BasePageRes<T> fromPageObject(@NonNull Object pageObject) {
+            return fromPageObject(null, pageObject);
         }
 
         /**
-         * @param pageObject org.springframework.data.domain.Page
-         *                   com.fxit.base.utils.Copies.BasePageRes
+         * @param pageObject
+         * <pre>
+         * org.springframework.data.domain.Page
+         * com.fxit.base.utils.Copies.BasePageRes
+         * </pre>
          */
         @SuppressWarnings("unchecked")
-        public static <T> BasePageRes<T> fromPages(List<T> list, @NonNull Object pageObject) {
+        public static <T> BasePageRes<T> fromPageObject(List<T> list, @NonNull Object pageObject) {
             BasePageRes<T> res = new BasePageRes<>();
             if (pageObject instanceof BasePageRes) {
                 res.pages = ((BasePageRes) pageObject).getPages();
