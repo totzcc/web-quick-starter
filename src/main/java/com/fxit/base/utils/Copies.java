@@ -120,8 +120,8 @@ public class Copies {
                 try {
                     Class<?> aClass = Class.forName("org.springframework.data.domain.Page");
                     if (aClass.isInstance(pageObject)) {
-                        res.total = (long) aClass.getMethod("getTotalElements").invoke(pageObject);
-                        res.pages = (long) aClass.getMethod("getTotalPages").invoke(pageObject);
+                        res.total = Long.parseLong(String.valueOf(aClass.getMethod("getTotalElements").invoke(pageObject)));
+                        res.pages = Long.parseLong(String.valueOf(aClass.getMethod("getTotalPages").invoke(pageObject)));
                         list = (List) aClass.getMethod("getContent").invoke(pageObject);
                     }
                 } catch (Exception e) {
@@ -130,8 +130,8 @@ public class Copies {
                 try {
                     Class<?> aClass = Class.forName("com.baomidou.mybatisplus.core.metadata.IPage");
                     if (aClass.isInstance(pageObject)) {
-                        res.total = (long) aClass.getMethod("getTotal").invoke(pageObject);
-                        res.pages = (long) aClass.getMethod("getPages").invoke(pageObject);
+                        res.total = Long.parseLong(String.valueOf(aClass.getMethod("getTotal").invoke(pageObject)));
+                        res.pages = Long.parseLong(String.valueOf(aClass.getMethod("getPages").invoke(pageObject)));
                         list = (List) aClass.getMethod("getRecords").invoke(pageObject);
                     }
                 } catch (Exception e) {
