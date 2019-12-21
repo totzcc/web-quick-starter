@@ -122,7 +122,9 @@ public class Copies {
                     if (aClass.isInstance(pageObject)) {
                         res.total = Long.parseLong(String.valueOf(aClass.getMethod("getTotalElements").invoke(pageObject)));
                         res.pages = Long.parseLong(String.valueOf(aClass.getMethod("getTotalPages").invoke(pageObject)));
-                        list = (List) aClass.getMethod("getContent").invoke(pageObject);
+                        if (list == null) {
+                            list = (List) aClass.getMethod("getContent").invoke(pageObject);
+                        }
                     }
                 } catch (Exception e) {
                     checkTypeException = e;
@@ -132,7 +134,10 @@ public class Copies {
                     if (aClass.isInstance(pageObject)) {
                         res.total = Long.parseLong(String.valueOf(aClass.getMethod("getTotal").invoke(pageObject)));
                         res.pages = Long.parseLong(String.valueOf(aClass.getMethod("getPages").invoke(pageObject)));
-                        list = (List) aClass.getMethod("getRecords").invoke(pageObject);
+                        if (list == null) {
+                            list = (List) aClass.getMethod("getRecords").invoke(pageObject);
+                        }
+
                     }
                 } catch (Exception e) {
                     checkTypeException = e;

@@ -38,7 +38,6 @@ public class ControllerExceptionHandler {
                 errorMsg = String.format("[%s] %s", checkError1.getField(), checkError1.getDefaultMessage());
             }
             res = new ExceptionRes(400, 400, "参数有误: " + errorMsg, exception.getMessage() + "", IBizError.Level.INFO);
-            res = new ExceptionRes(new BizException(IBizError.BizCommonError.PARAM_ERROR, errorMsg, exception));
         } else {
             res = new ExceptionRes(500, 500, "系统繁忙", exception.getMessage(), IBizError.Level.ERROR);
         }
