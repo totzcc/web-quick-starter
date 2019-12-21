@@ -49,22 +49,14 @@ public class ControllerExceptionHandler {
             url += "?" + queryString;
         }
         String errorParams = String.format("(%s - %s - %s - %s)", method, url, href, referrer);
-        if (exception instanceof BizException) {
-            BizException bizException = (BizException) exception;
-            Throwable throwable = bizException.getThrowable();
-            switch (bizException.getLevel()) {
-                case INFO:
-                    log.info(errorParams + exception.getMessage());
-                    break;
-                case WARN:
-                    log.warn(errorParams + exception.getMessage(), throwable);
-                    break;
-                default:
-                    log.error(errorParams + exception.getMessage(), throwable);
-                    break;
-            }
-        } else {
-            log.error(errorParams, exception);
+        switch (res.getLevel()) {
+            case INFO:
+                log.info(errorParams + exception.getMessage());
+                break;
+            case WARN:
+            case ERROR:
+                log.error(errorParams + exception.getMessage(), exception);
+                break;
         }
         return res;
     }
