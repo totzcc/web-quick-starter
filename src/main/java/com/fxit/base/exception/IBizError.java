@@ -22,7 +22,7 @@ public interface IBizError {
         PARAM_ERROR(400, 40001, INFO, "参数有误"),
         NEED_LOGIN(403, 40301, INFO, "需要登录"),
         AUTH_NEED(403, 40302, INFO, "权限不足"),
-        RESOURCE_NOT_FOUND(404, 40401, ERROR, "数据不存在"),
+        RESOURCE_NOT_FOUND(404, 40401, INFO, "数据不存在"),
         SYSTEM_ERROR(500, 50001, ERROR, "系统异常"),
         ;
 
